@@ -72,7 +72,7 @@ import vInput from './components/input/v-input.vue';
 import vButton from './components/button/v-button.vue';
 import vHotel from './components/hotel/v-hotel.vue';
 const hotels = useHotels();
-hotels.fetchHotels();
+// hotels.fetchHotels();
 
 //country
 const country = ref([])

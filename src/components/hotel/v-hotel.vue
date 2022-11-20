@@ -35,8 +35,8 @@ defineProps({
         default: ''
     },
     stars: {
-        type: String,
-        default: ''
+        type: Number,
+        default: 0
     },
     min_price: {
         type: Number,
