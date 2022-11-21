@@ -29,7 +29,7 @@ const updateValue = (value) => {
 
 <style lang="less" scoped>
 .input__field {
-    height: 40px;
+    height: 50px;
     border: 1px solid var(--border);
     padding-left: 20px;
     outline: none;

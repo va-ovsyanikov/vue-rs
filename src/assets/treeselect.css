@@ -473,7 +473,7 @@
     width: 100%;
     overflow: visible;
     -webkit-transition: 0s;
-    transition: 0s
+    transition: 0s;
 }
 
 .vue-treeselect--open-below:not(.vue-treeselect--append-to-body) .vue-treeselect__menu-container {

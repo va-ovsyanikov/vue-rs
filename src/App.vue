@@ -20,13 +20,15 @@
 
       <v-filter-item title="Цена">
         <div class="filter__price">
-          <v-input placeholder="от 0 Р" v-model="price[0]" />
+          <!-- <v-input placeholder="от 0 Р" v-model="price[0]" /> -->
+          <div class="filter__price__show">от {{ price[0] }} Р</div>
           <span class="filter__divider">
             <svg width="10" height="1" viewBox="0 0 10 1" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="10" height="1" fill="#C4C4C4" />
             </svg>
           </span>
-          <v-input placeholder="до 100 500 Р" v-model="price[1]" />
+          <div class="filter__price__show">до {{ price[1] }} Р</div>
+          <!-- <v-input placeholder="до 100 500 Р" v-model="price[1]" /> -->
         </div>
         <v-slider v-model="price" :format="format" :merge="merge" :max="5000" :tooltips="false" />
       </v-filter-item>
@@ -35,36 +37,37 @@
         Применить фильтр
       </v-button>
       <br>
-      <v-button type="secondary"  @click="resetHotelsByFilter">
-        Применить фильтр
+      <v-button type="secondary" @click="resetHotelsByFilter">
+        Очистить фильтр
       </v-button>
     </div>
     <div class="app__content">
       <div v-if="hotels.getHotels.length">
-  
-        <v-hotel v-for="({name, stars, country, type, min_price, description, reviews_amount}, index) in hotels.getHotels" :key="index"
-        :name="name"
-        :stars="stars"
-        :country="country"
-        :type="type"
-        :min_price="min_price"
-        :description="description"
-        :reviews_amount="reviews_amount"
-        >
-        
+
+        <v-hotel v-for="({ name, stars, country, type, min_price, description, reviews_amount }, index) in getItems "
+          :key="index" :name="name" :stars="stars" :country="country" :type="type" :min_price="min_price"
+          :description="description" :reviews_amount="reviews_amount">
+
         </v-hotel>
-       
+
       </div>
       <div v-else>
         Записей не найдено
       </div>
-
     </div>
-
   </div>
+  <div class="pagination">
+    <v-paginate :page-count="getPageCount" :page-range="2" :margin-pages="2" :prev-text="'< Назад'"
+      :next-text="'Следующая >'" :prev-class="'page__prev__item'" :prev-link-class="'page__link__prev'"
+      :next-link-class="'page__link__next'" :page-link-class="'page__link'" :next-class="'page__next__item'"
+      :container-class="'pagination__wrap'" :page-class="'page__item'" :click-handler="changePage">
+    </v-paginate>
+  </div>
+
 </template>
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { useHotels } from './stores/hotels';
 import vFilterItem from './components/filter/v-filterItem.vue';
 import vRating from './components/rating/v-rating.vue';
@@ -72,8 +75,8 @@ import vInput from './components/input/v-input.vue';
 import vButton from './components/button/v-button.vue';
 import vHotel from './components/hotel/v-hotel.vue';
 const hotels = useHotels();
+const router = useRouter()
 // hotels.fetchHotels();
-
 //country
 const country = ref([])
 const countryList = ref([{
@@ -85,7 +88,7 @@ const countryList = ref([{
 }, {
   id: 'Италия',
   label: 'Италия',
-}])
+},])
 
 //type
 const type = ref([])
@@ -135,16 +138,38 @@ const resetHotelsByFilter = () => {
   location.reload()
 }
 
+//pagination
+const perPage = ref(3)
+const currentPage = ref(1)
 
+const changePage = (pageNum) => {
+  if (pageNum === 1) {
+    router.push(`/`)
+  } else {
+    router.push(`/?page=${pageNum}`)
+  }
+  currentPage.value = Number(pageNum);
+  // window.scrollTo(0, 0)
+}
 
+const getItems = computed(() => {
+  let current = currentPage.value * perPage.value;
+  let start = current - perPage.value;
+  return [...hotels.getHotels].splice(start, current);
+})
+const getPageCount = computed(() => {
+  console.log(hotels.getHotels);
+  return Math.ceil(hotels.getHotels.length / perPage.value);
+})
 </script>
 <style lang="less" scoped>
 .app {
-  width: 1200px;
+  width: 100%;
   margin: 50px auto;
   position: relative;
   display: flex;
   justify-content: space-between;
+  flex: 1 0 auto;
 }
 
 .app__filter {
@@ -161,6 +186,17 @@ const resetHotelsByFilter = () => {
   justify-content: space-between;
   align-content: center;
   margin-bottom: 40px;
+}
+
+.filter__price__show {
+  border: 1px solid var(--border);
+  color: var(--gray);
+  border-radius: 10px;
+  height: 50px;
+  width: 148px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .filter__divider {

@@ -19,7 +19,8 @@
     "vue": "^3.2.41",
     "vue-axios": "^3.5.2",
     "vue-router": "^4.1.5",
-    "vue3-treeselect": "^0.1.10"
+    "vue3-treeselect": "^0.1.10",
+    "vuejs-paginate-next": "^1.0.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.1.2",

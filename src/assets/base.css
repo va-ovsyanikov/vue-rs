@@ -18,27 +18,4 @@
   font-weight: normal;
 }
 
-body {
-  font-family: 'PT Sans', sans-serif;
-}
 
-
-::-webkit-input-placeholder {
-  color: var(--gray);
-  font-weight: 500;
-}
-
-::-moz-placeholder {
-  color: var(--gray);
-  font-weight: 500;
-}
-
-:-moz-placeholder {
-  color: var(--gray);
-  font-weight: 500;
-}
-
-:-ms-input-placeholder {
-  color: var(--gray);
-  font-weight: 500;
-}

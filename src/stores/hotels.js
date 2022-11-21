@@ -152,7 +152,7 @@ export const useHotels = defineStore('counter', {
           return state.hotels
         } else {
           if (state.filter.recall) {
-            return hotel.reviews_amount == state.filter.recall
+            return hotel.reviews_amount > state.filter.recall
           } else {
             return state.hotels
           }
