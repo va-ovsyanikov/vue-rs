@@ -57,7 +57,7 @@
     </div>
   </div>
   <div class="pagination">
-    <v-paginate :page-count="getPageCount" :page-range="2" :margin-pages="2" :prev-text="'< Назад'"
+    <v-paginate v-model="currentPage" :page-count="getPageCount" :page-range="2" :margin-pages="2" :prev-text="'< Назад'"
       :next-text="'Следующая >'" :prev-class="'page__prev__item'" :prev-link-class="'page__link__prev'"
       :next-link-class="'page__link__next'" :page-link-class="'page__link'" :next-class="'page__next__item'"
       :container-class="'pagination__wrap'" :page-class="'page__item'" :click-handler="changePage">
@@ -66,8 +66,8 @@
 
 </template>
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed, watch, ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { useHotels } from './stores/hotels';
 import vFilterItem from './components/filter/v-filterItem.vue';
 import vRating from './components/rating/v-rating.vue';
@@ -76,6 +76,7 @@ import vButton from './components/button/v-button.vue';
 import vHotel from './components/hotel/v-hotel.vue';
 const hotels = useHotels();
 const router = useRouter()
+const route = useRoute()
 // hotels.fetchHotels();
 //country
 const country = ref([])
@@ -138,16 +139,14 @@ const resetHotelsByFilter = () => {
   location.reload()
 }
 
-//pagination
+
+const pageQuery = computed(()=>route.query.page)
+watch(pageQuery, newPageQuery => currentPage.value = newPageQuery)
 const perPage = ref(3)
-const currentPage = ref(1)
+const currentPage = ref() 
 
 const changePage = (pageNum) => {
-  if (pageNum === 1) {
-    router.push(`/`)
-  } else {
-    router.push(`/?page=${pageNum}`)
-  }
+  router.push(`${route.path}?page=${pageNum}`)
   currentPage.value = Number(pageNum);
   // window.scrollTo(0, 0)
 }
@@ -158,7 +157,6 @@ const getItems = computed(() => {
   return [...hotels.getHotels].splice(start, current);
 })
 const getPageCount = computed(() => {
-  console.log(hotels.getHotels);
   return Math.ceil(hotels.getHotels.length / perPage.value);
 })
 </script>
