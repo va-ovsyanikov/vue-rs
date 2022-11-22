@@ -139,7 +139,6 @@ const resetHotelsByFilter = () => {
   location.reload()
 }
 
-
 const pageQuery = computed(()=>route.query.page)
 watch(pageQuery, newPageQuery => currentPage.value = newPageQuery)
 const perPage = ref(3)
@@ -152,10 +151,11 @@ const changePage = (pageNum) => {
 }
 
 const getItems = computed(() => {
-  let current = currentPage.value * perPage.value;
+  let current = (currentPage.value === undefined ? 1 : currentPage.value) * perPage.value;
   let start = current - perPage.value;
   return [...hotels.getHotels].splice(start, current);
 })
+
 const getPageCount = computed(() => {
   return Math.ceil(hotels.getHotels.length / perPage.value);
 })
