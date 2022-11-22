@@ -179,7 +179,8 @@
 }
 
 .vue-treeselect__multi-value {
-    display: inline-block
+    display: inline-block;
+    color: var(--gray-dark);
 }
 
 .vue-treeselect--has-value .vue-treeselect__multi-value {
@@ -198,14 +199,14 @@
     right: 0;
     bottom: 0;
     left: 0;
-    line-height: 20px;
+    line-height: 47px;
     -webkit-user-select: none;
     user-select: none;
     pointer-events: none
 }
 
 .vue-treeselect__placeholder {
-    color: #bdbdbd
+    color: var(--gray-dark)
 }
 
 .vue-treeselect__single-value {

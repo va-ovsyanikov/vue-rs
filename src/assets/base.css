@@ -2,6 +2,7 @@
   --green: #00BB6D;
   --text: #3A3A3A;
   --gray: #CDCDCD;
+  --gray-dark: #868686;
   --border: #EAEAEA;
   --head: #3A3A3A;
   --lilac: #6A53F5;
@@ -14,8 +15,5 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
-  position: relative;
-  font-weight: normal;
+  padding: 0;
 }
-
-

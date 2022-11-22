@@ -1,17 +1,19 @@
 <template>
-        <div v-for="item in 5" :key="item" class="checkbox">
-            <input class="checkbox__field" :value="`${item}`" type="checkbox" v-model="rating" :id="`check${item}`"/>
-            <label :for="`check${item}`" class="checkbox__label">
-                <span v-if="label" class="checkbox__label__text">
-                    {{ item }}
-                    {{ item == 1 ? label + 'a' : label && item < 5 ? label + 'ы' : label }}
-                </span>
-            </label>
-        </div>
+    <div v-for="item in 5" :key="item" class="checkbox">
+        <input class="checkbox__field" :value="`${item}`" type="checkbox" v-model="stars" :id="`check${item}`" />
+        <label :for="`check${item}`" class="checkbox__label">
+            <span v-if="label" class="checkbox__label__text">
+                {{ item }}
+                {{ getNoun(item, label + 'a', label + 'ы', label) }}
+                <!-- {{ item == 1 ? label + 'a' : label && item < 5 ? label + 'ы' : label }} -->
+            </span>
+        </label>
+    </div>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue';
+import { getNoun } from '../../utils/declination';
 defineProps({
     label: {
         type: String,
@@ -19,19 +21,20 @@ defineProps({
     },
 
 });
-const rating = ref([])
-watch(rating, ()=>{
-    selectRating(rating.value)
+const stars = ref([])
+watch(stars, () => {
+    selectstars(stars.value)
 })
-const emit = defineEmits(['selectRating'])
-const selectRating = (rating)=>{
-    emit('selectRating', rating)
+const emit = defineEmits(['selectstars'])
+const selectstars = (stars) => {
+    emit('selectstars', stars)
 }
 </script>
 
 <style lang="less" scoped>
 .checkbox {
     margin-bottom: 13px;
+
     &__field {
         position: absolute;
         z-index: -1;
@@ -52,6 +55,7 @@ const selectRating = (rating)=>{
 
     &__label {
         display: flex;
+
         &::before {
             content: "";
             display: block;

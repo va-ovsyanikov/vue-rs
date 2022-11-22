@@ -92,12 +92,7 @@ export const useHotels = defineStore('counter', {
     //   }
     // },
     filteredHotels(data) {
-      try {
         this.filter = data
-        console.log(this.filter);
-      } catch (error) {
-        console.log(error);
-      }
     }
   },
   getters: {

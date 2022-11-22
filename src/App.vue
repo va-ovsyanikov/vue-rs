@@ -37,7 +37,7 @@
         Применить фильтр
       </v-button>
       <br>
-      <v-button type="secondary" @click="resetHotelsByFilter">
+      <v-button type="secondary" @click="resetHotelsByFilter" icon="ci-close_big">
         Очистить фильтр
       </v-button>
     </div>
@@ -57,10 +57,11 @@
     </div>
   </div>
   <div class="pagination">
-    <v-paginate v-model="currentPage" :page-count="getPageCount" :page-range="2" :margin-pages="2" :prev-text="'< Назад'"
-      :next-text="'Следующая >'" :prev-class="'page__prev__item'" :prev-link-class="'page__link__prev'"
-      :next-link-class="'page__link__next'" :page-link-class="'page__link'" :next-class="'page__next__item'"
-      :container-class="'pagination__wrap'" :page-class="'page__item'" :click-handler="changePage">
+    <v-paginate v-model="currentPage" :page-count="getPageCount" :page-range="2" :margin-pages="2"
+      :prev-text="'< Назад'" :next-text="'Следующая >'" :prev-class="'page__prev__item'"
+      :prev-link-class="'page__link__prev'" :next-link-class="'page__link__next'" :page-link-class="'page__link'"
+      :next-class="'page__next__item'" :container-class="'pagination__wrap'" :page-class="'page__item'"
+      :click-handler="changePage">
     </v-paginate>
   </div>
 
@@ -70,7 +71,7 @@ import { computed, watch, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useHotels } from './stores/hotels';
 import vFilterItem from './components/filter/v-filterItem.vue';
-import vRating from './components/rating/v-rating.vue';
+import vRating from './components/filter/v-stars.vue';
 import vInput from './components/input/v-input.vue';
 import vButton from './components/button/v-button.vue';
 import vHotel from './components/hotel/v-hotel.vue';
@@ -134,18 +135,23 @@ const getHotelsByFilter = () => {
     max_price: price.value[1],
   }
   hotels.filteredHotels(filter)
+  router.push(route.path)
 }
 const resetHotelsByFilter = () => {
   location.reload()
 }
 
-const pageQuery = computed(()=>route.query.page)
+const pageQuery = computed(() => route.query.page)
 watch(pageQuery, newPageQuery => currentPage.value = newPageQuery)
 const perPage = ref(3)
-const currentPage = ref() 
+const currentPage = ref()
 
 const changePage = (pageNum) => {
-  router.push(`${route.path}?page=${pageNum}`)
+  if (pageNum === 1) {
+    router.push(route.path)
+  } else {
+    router.push(`${route.path}?page=${pageNum}`)
+  }
   currentPage.value = Number(pageNum);
   // window.scrollTo(0, 0)
 }
@@ -188,7 +194,7 @@ const getPageCount = computed(() => {
 
 .filter__price__show {
   border: 1px solid var(--border);
-  color: var(--gray);
+  color: var(--gray-dark);
   border-radius: 10px;
   height: 50px;
   width: 148px;
