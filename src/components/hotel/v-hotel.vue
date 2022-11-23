@@ -3,7 +3,8 @@
         <div class="hotel__left">
             <h3 class="hotel__title">{{ name }}</h3>
             <div class="hotel__data">
-                <span class="hotel__rating">{{ stars }}</span>
+                <v-rating :star-limit="5" :stars="stars"></v-rating>
+                <!-- <span class="hotel__rating">{{ stars }}</span> -->
                 <span class="hotel__type">{{ type }}</span>
                 <i class="hotel__dot ci-dot_02_s"></i>
                 <span class="hotel__reviews">{{ reviews_amount }} {{ getNoun(reviews_amount, 'отзыв', 'отзыва',
@@ -15,9 +16,11 @@
             <p class="hotel__text">{{ description }}</p>
         </div>
         <div class="hotel__right">
-            {{ min_price }}
-            <span>Цена за ночь</span>
-            <v-button icon="ci-check" type="small" :active="true">Забранировать</v-button>
+            <span class="hotel__price">
+                {{ min_price }} Р
+            </span>
+            <span class="hotel__price__night">Цена за ночь</span>
+            <v-button icon="ci-credit_card" type="small">Забранировать</v-button>
         </div>
     </div>
 </template>
@@ -25,6 +28,7 @@
 <script setup>
 import { getNoun } from '../../utils/declination';
 import vButton from '../button/v-button.vue';
+import vRating from './v-rating.vue';
 defineProps({
     name: {
         type: String,
@@ -65,7 +69,9 @@ defineProps({
     padding: 25px;
     margin-bottom: 15px;
     min-height: 167px;
-    &__left{
+    color: var(--text);
+
+    &__left {
         width: calc(100% - 179px);
     }
 
@@ -78,6 +84,7 @@ defineProps({
         display: flex;
         justify-content: flex-start;
         align-items: center;
+        margin-bottom: 15px;
     }
 
     &__type {
@@ -109,6 +116,18 @@ defineProps({
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+    }
+
+    &__price {
+        font-size: 25px;
+        font-weight: 700;
+
+        &__night {
+            color: var(--gray-dark);
+            font-size: 12px;
+            margin-top: 2px;
+            margin-bottom: 23px;
+        }
     }
 
 }

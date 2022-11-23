@@ -92,7 +92,7 @@ export const useHotels = defineStore('counter', {
     //   }
     // },
     filteredHotels(data) {
-        this.filter = data
+      this.filter = data
     }
   },
   getters: {
@@ -131,8 +131,8 @@ export const useHotels = defineStore('counter', {
         if (state.filter == '') {
           return state.hotels
         } else {
-          if (state.filter.rating.length) {
-            for (let item of state.filter.rating) {
+          if (state.filter.stars.length) {
+            for (let item of state.filter.stars) {
               if (hotel.stars == item) {
                 return item
               }

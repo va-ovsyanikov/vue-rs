@@ -10,7 +10,7 @@
       </v-filter-item>
 
       <v-filter-item title="Количество звезд">
-        <v-rating label="звезд" @selectRating="selectRating"></v-rating>
+        <v-stars label="звезд" @selectStars="selectStars"></v-stars>
       </v-filter-item>
 
       <v-filter-item title="Количество отзывов (от)">
@@ -45,7 +45,7 @@
       <div v-if="hotels.getHotels.length">
 
         <v-hotel v-for="({ name, stars, country, type, min_price, description, reviews_amount }, index) in getItems "
-          :key="index" :name="name" :stars="stars" :country="country" :type="type" :min_price="min_price"
+          :key="index" :name="name" :stars="stars" :country="country" :type="type" :min_price="min_price" 
           :description="description" :reviews_amount="reviews_amount">
 
         </v-hotel>
@@ -71,7 +71,7 @@ import { computed, watch, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useHotels } from './stores/hotels';
 import vFilterItem from './components/filter/v-filterItem.vue';
-import vRating from './components/filter/v-stars.vue';
+import vStars from './components/filter/v-stars.vue';
 import vInput from './components/input/v-input.vue';
 import vButton from './components/button/v-button.vue';
 import vHotel from './components/hotel/v-hotel.vue';
@@ -102,10 +102,10 @@ const typeList = ref([{
   label: 'Отель',
 }])
 
-//rating
-const rating = ref([])
-const selectRating = (data) => {
-  rating.value = data
+//stars
+const stars = ref([])
+const selectStars = (data) => {
+  stars.value = data
 }
 
 //recall
@@ -129,7 +129,7 @@ const getHotelsByFilter = () => {
   const filter = {
     country: country.value,
     type: type.value,
-    rating: rating.value,
+    stars: stars.value,
     recall: recall.value,
     min_price: price.value[0],
     max_price: price.value[1],

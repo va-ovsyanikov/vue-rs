@@ -23,11 +23,11 @@ defineProps({
 });
 const stars = ref([])
 watch(stars, () => {
-    selectstars(stars.value)
+    selectStars(stars.value)
 })
-const emit = defineEmits(['selectstars'])
-const selectstars = (stars) => {
-    emit('selectstars', stars)
+const emit = defineEmits(['selectStars'])
+const selectStars = (stars) => {
+    emit('selectStars', stars)
 }
 </script>
 
